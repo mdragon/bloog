@@ -7,13 +7,11 @@
         <meta name="verify-v1" content="K+O2nFwH5Lg26LvnVJxrlkb31pSavfoBmifAq4a/l0k=" />
 		<link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen" />
 		<link rel="alternate" type="application/rss+xml" title="{{ blog.title }} RSS Feed" href="{{ blog.root_url }}{{ blog.master_atom_url }}" />
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/assets/skins/sam/skin.css" />
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/container/assets/skins/sam/container.css" />
 		<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui-smoothness/jquery-ui-1.7.2.custom.css" />
         {% block head %}
         {% endblock %}
     </head>
-    <body class="yui-skin-sam">
+	<body>
         <div id="wrapper">
             <a name="top"></a>
             <div id="masthead" class="fix">
@@ -62,10 +60,11 @@
             <div id="archives" class="fix" style="display: none;">
                 <ul class="fix">
                     {% for year in archive_years %}
-                    <li><a href="/{{year}}">{{year}}</a></li>
+                    	<li><a href="/{{ year }}">{{ year }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
+
 			<div id="mid" class="fix">
 				<!-- First column: Main content -->
 				{% block first_column %}
@@ -274,7 +273,6 @@
 </script>
 <script type="text/javascript" src="/static/js/ckeditor/ckeditor.js"></script>
 
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="/static/default/js/bloog_base.js"></script>
 
 <script type="text/javascript">
