@@ -5,11 +5,11 @@
         <title> {{ title }}</title>
         <meta name="generator" content="Bloog {{ bloog_version }}" />
         <meta name="verify-v1" content="K+O2nFwH5Lg26LvnVJxrlkb31pSavfoBmifAq4a/l0k=" />
-        <link rel="stylesheet" href="/static/default/style.css" type="text/css" media="screen" />
-        <link rel="alternate" type="application/rss+xml" title="{{ blog.title }} RSS Feed" 
-              href="{{ blog.root_url }}{{ blog.master_atom_url }}" />
-        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/assets/skins/sam/skin.css" />
-        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/container/assets/skins/sam/container.css" />
+		<link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen" />
+		<link rel="alternate" type="application/rss+xml" title="{{ blog.title }} RSS Feed" href="{{ blog.root_url }}{{ blog.master_atom_url }}" />
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/assets/skins/sam/skin.css" />
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/container/assets/skins/sam/container.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui-smoothness/jquery-ui-1.7.2.custom.css" />
         {% block head %}
         {% endblock %}
     </head>
@@ -66,32 +66,31 @@
                     {% endfor %}
                 </ul>
             </div>
+			<div id="mid" class="fix">
+				<!-- First column: Main content -->
+				{% block first_column %}
+				<div id="mainCol" class="fix"><a name="main"></a>
+				{% for article in articles %}
+					{% include 'article_excerpt.html' %}
+				{% endfor %}
+				{% if not articles %}
+					{% include 'bloog_intro.html' %}
+				{% endif %}
+				{% include 'pager.html' %}
+				</div>
+				{% endblock %}
 
-            <div id="mid" class="fix">
-                <!-- First column: Main content -->
-                {% block first_column %}
-                <div id="mainCol" class="fix"><a name="main"></a>
-                {% for article in articles %}
-                    {% include 'article_excerpt.html' %}
-                {% endfor %}
-                {% if not articles %}
-                    {% include 'bloog_intro.html' %}
-                {% endif %}
-                {% include 'pager.html' %}
-                </div>
-                {% endblock %}
-
-                <!-- Second column: Show search, selected internal links, etc. -->
-                {% block second_column %}
-                <div id="midCol">
-                    {% block search %}
-                    <div id="searchWrap">
-                        <form method="get" id="searchForm" action="/search">
-                            <input type="text" value="{{ searchterm }}" name="s" id="s" />
-                            <input id="searchsubmit" type="image" src="/static/default/images/btn_search.gif" alt="Search" />
-                        </form>
-                    </div>
-                    {% endblock %}
+				<!-- Second column: Show search, selected internal links, etc. -->
+				{% block second_column %}
+				<div id="midCol">
+					{% block search %}
+					<div id="searchWrap">
+						<form method="get" id="searchForm" action="/search">
+							<input type="text" value="{{ searchterm }}" name="s" id="s" />
+							<input id="searchsubmit" type="image" src="/static/default/images/btn_search.gif" alt="Search" />
+						</form>
+					</div>
+					{% endblock %}
 
                     {% block tags %}
                     <div class="middle_links">
@@ -111,23 +110,23 @@
                     </div>
                     {% endblock %}
 
-                    {% block extra_panel %}
-                    {% endblock %}
+					{% block extra_panel %}
+					{% endblock %}
 
-                    {% if user_is_admin %}
-                        <!-- Administrative Console -->
-                        <div class="middle_links">
-                            <h3>Administrative Panel</h3>
-                            <ul>
-                                <li><a id="newblog" href="#">New Blog Entry</a></li>
-                                <li><a id="newarticle" href="#">New Article</a>
-                                    - unsyndicated<br />(e.g., about page)</li>
-                                <li><a id="openshell" href="/admin/shell">Open Shell</a></li>
-                                <li><a href="/admin/cache_stats">Memcached Stats</a></li>
-                                <li><a href="/admin/timings">Timing Stats</a></li>
-                            </ul>
-                        </div>
-                    {% endif %}
+					{% if user_is_admin %}
+						<!-- Administrative Console -->
+						<div class="middle_links">
+							<h3>Administrative Panel</h3>
+							<ul>
+								<li><a id="newblog" href="#">New Blog Entry</a></li>
+								<li><a id="newarticle" href="#">New Article</a>
+									- unsyndicated<br />(e.g., about page)</li>
+								<li><a id="openshell" href="/admin/shell">Open Shell</a></li>
+								<li><a href="/admin/cache_stats">Memcached Stats</a></li>
+								<li><a href="/admin/timings">Timing Stats</a></li>
+							</ul>
+						</div>
+					{% endif %}
 
                     {% block featuredPages1 %}
 					{% if false %}
@@ -180,90 +179,103 @@
                     {% endblock %}
                 </div>
                 {% endblock %}
-
-                <!-- Third column: Show selected external links, ads, etc. -->
-                {% block third_column %}
-                {% include 'ads.html' %}
-                {% endblock %}
             </div>
+			<div id="footer">
+				<ul class="nav fix">
+					<li>
+						<a href="/" title="Return to the the frontpage">Home
+							<br/>
+							<span>Frontpage</span>
+						</a>
+					</li>
+					{% if user %}
+					<li>
+						<a href="{{ logout_url }}" title="Logout">Logout
+							<br/>
+							<span>goodbye</span>
+						</a>
+					</li>
+					{% else %}
+					<li>
+						<a href="{{ login_url }}" title="Login">Login
+							<br/>
+							<span>Google id</span>
+						</a>
+					</li>
+					{% endif %}
+					{% for link in navlinks %}
+					<li>
+						<a href="{{ link.url }}" title="{{ link.description }}">{{ link.title }}
+							<br/>
+							<span>{{ link.description }}</span>
+						</a>
+					</li>
+					{% endfor %}
+					<li>
+						<a href="{{ blog.master_atom_url }}" title="Subscribe to the main Atom feed">Atom
+							<br/>
+							<span>Syndication</span>
+						</a>
+					</li>
+					<li class="top">
+						<a href="#top" title="Return to the top">Top
+							<br/>
+							<span>Return to top</span>
+						</a>
+					</li>
+				</ul>
+				<div id="attribution">
+					<div id="downloadlinks">
+						<p><a href="http://bloog.billkatz.com">Bloog</a> for 
+							<a href="http://code.google.com/appengine/">Google App Engine</a> is available at
+							<a href="http://github.com/DocSavage/bloog">GitHub</a> under an MIT license.</p>
+						<p>This template is an adapted version of 
+							<a href="http://5thirtyone.com/grid-focus" title="Grid Focus by: Derek Punsalan">Grid Focus</a>
+							for <a href="http://www.djangoproject.com/documentation/templates/">Django templates</a>.</p>
+						<p>Cache debugging: Page was rendered {% now "M j, H:i:s" %}.
+						{% if user %}
+							({{ user.nickname }})
+						{% endif %}
+						{% if user_is_admin %}
+							User is administrator.
+						{% endif %}
+						</p>
+					</div>
+					<img id="poweredby" src="/static/images/appengine-noborder-120x30.gif" alt="Powered by Google App Engine" />
+				</div>
+			</div>
+		</div>
 
-            <div id="footer">
-                <ul class="nav fix">
-                    <li>
-                        <a href="/" title="Return to the the frontpage">Home
-                            <br/>
-                            <span>Frontpage</span>
-                        </a>
-                    </li>
-                    {% if user %}
-                    <li>
-                        <a href="{{ logout_url }}" title="Logout">Logout
-                            <br/>
-                            <span>goodbye</span>
-                        </a>
-                    </li>
-                    {% else %}
-                    <li>
-                        <a href="{{ login_url }}" title="Login">Login
-                            <br/>
-                            <span>Google id</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% for link in navlinks %}
-                    <li>
-                        <a href="{{ link.url }}" title="{{ link.description }}">{{ link.title }}
-                            <br/>
-                            <span>{{ link.description }}</span>
-                        </a>
-                    </li>
-                    {% endfor %}
-                    <li>
-                        <a href="{{ blog.master_atom_url }}" title="Subscribe to the main Atom feed">Atom
-                            <br/>
-                            <span>Syndication</span>
-                        </a>
-                    </li>
-                    <li class="top">
-                        <a href="#top" title="Return to the top">Top
-                            <br/>
-                            <span>Return to top</span>
-                        </a>
-                    </li>
-                </ul>
-                <div id="attribution">
-                    <div id="downloadlinks">
-                        <p>Running a modified version of the <a href="http://github.com/Arachnid/bloog">Arachnid fork</a> of <a href="http://bloog.billkatz.com">Bloog</a> for 
-                            <a href="http://code.google.com/appengine/">Google App Engine</a> is available at
-                            <a href="http://github.com/DocSavage/bloog">GitHub</a> under an MIT license.</p>
-                        <p>This template is an adapted version of 
-                            <a href="http://5thirtyone.com/grid-focus" title="Grid Focus by: Derek Punsalan">Grid Focus</a>
-                            for <a href="http://www.djangoproject.com/documentation/templates/">Django templates</a>.</p>
-                        <p>Cache debugging: Page was rendered {% now "M j, H:i:s" %}.
-                        {% if user %}
-                          ({{ user.nickname }})
-                        {% endif %}
-                        {% if user_is_admin %}
-                          User is administrator.
-                        {% endif %}
-                        </p>
-                    </div>
-                    <img id="poweredby" src="/static/images/appengine-noborder-120x30.gif" alt="Powered by Google App Engine" />
-                </div>
-            </div>
-        </div>
+		{% if user_is_admin %}
+		{% include "form_editor.html" %}
+		{% endif %}
 
-        <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-        <script type="text/javascript" src="/static/default/js/bloog_base.js"></script>
-
-        {% if user_is_admin %}
-        {% include "form_editor.html" %}
-        {% endif %}
-
-        {% block end_body %}
-        {% endblock %}
-    </body>
+		{% block end_body %}
+		{% endblock %}
+	</body>
 </html>
+
+<script type="text/javascript" src="/static/js/agd.js"></script>
+<script type="text/javascript">
+    ;(function(){
+        AGD.setOn({{blog.js_debug}});
+        AGD.rebase("AG");
+    })();
+</script>
+<script type="text/javascript" src="/static/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript">
+    jQuery.noConflict();
+</script>
+<script type="text/javascript" src="/static/js/jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.templates.js"></script>
+<script type="text/javascript" src="/static/js/chili/jquery.chili-2.2.js"></script>
+<script type="text/javascript">
+    ChiliBook.recipeFolder = "/static/js/chili/";
+</script>
+<script type="text/javascript" src="/static/js/ckeditor/ckeditor.js"></script>
+
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="/static/default/js/bloog_base.js"></script>
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -279,4 +291,6 @@ pageTracker._trackPageview();
 		// don't report admin traffic in Analytics
 		pageTracker._setVar('no_report');
 	</script>
+    
+    <script type="text/javascript" src="/static/js/admin.js"></script>
 {% endif %}

@@ -28,7 +28,8 @@ BLOG = {
     "days_can_comment": 60,
     # You can override this default for each page through a handler's call to 
     #  view.ViewPage(cache_time=...)
-    "cache_time": 0, #if DEBUG else 3600,
+    "cache_time": 0 if DEBUG else 3600,
+	"js_debug": "true" if DEBUG else "false",
 
     # Use the default YUI-based theme.
     # If another string is used besides 'default', calls to static files and
@@ -65,42 +66,33 @@ PAGE = {
           #"url": "/contact"},
     ],
     "featuredMyPages": {
-        "title": "Bloog Development",
-        "description": "Get involved",
+        "title": "The Author",
+        "description": "Ben is a 22 year-old software engineer and geek living in the San Francisco Bay Area.  He splits his time between work, hobby programming, video games, and the interwebs.",
         "entries": [
-            { "title": "Source Code", 
-              "url": "http://github.com/DocSavage/bloog", 
-              "description": "GitHub repository" },
-            { "title": "Tarball", 
-              "url": "http://github.com/DocSavage/bloog/tarball/master", 
-              "description": "Most recent snapshot" },
-            { "title": "Group", 
-              "url": "http://groups.google.com/group/bloog/topics", 
-              "description": "Developer discussion" },
-            { "title": "Author's Bloog", 
-              "url": "http://www.billkatz.com", 
-              "description": "What's brewing" },
-            { "title": "Architecture Diagram", 
-              "url": "/static/images/architecture2.png", 
-              "description": "RESTful Bloog" }
+            { "title": "Git Hub", 
+              "url": "http://github.com/bcherry", 
+              "description": "My Hobby Code" },
+            { "title": "Facebook", 
+              "url": "http://www.facebook.com/bcherry", 
+              "description": "That Social Thing" },
+            { "title": "Twitter", 
+              "url": "http://twitter.com/bcherry", 
+              "description": "Rambling Tweets" },
+            { "title": "LinkedIn", 
+              "url": "http://www.linkedin.com/in/bcherryprogrammer", 
+              "description": "Serious Professional Stuff" },
+            { "title": "Google Profile", 
+              "url": "http://www.google.com/profiles/bcherry", 
+              "description": "Google Owns My Soul" },
         ]
     },
-    "featuredOthersPages": {
-        "title": "Google App Engine",
-        "description": "Developer Resources",
-        "entries": [
-            { "title": "Google App Engine", 
-              "url": "http://code.google.com/appengine/", 
-              "description": "The mothership" },
-            { "title": "App Engine Group", 
-              "url": "http://groups.google.com/group/google-appengine", 
-              "description": "Developer group" },
-            { "title": "App Engine Open Source", 
-              "url": "http://groups.google.com/group/google-appengine/web/google-app-engine-open-source-projects", 
-              "description": "Code!" },
-            { "title": "App Engine Console", 
-              "url": "http://appengine.google.com", 
-              "description": "Your apps" }
-        ]
-    },
+    #"featuredOthersPages": {
+    #    "title": "Google App Engine",
+    #    "description": "Developer Resources",
+    #    "entries": [
+    #        { "title": "Google App Engine", 
+    #          "url": "http://code.google.com/appengine/", 
+    #          "description": "The mothership" },
+    #    ]
+    #},
 }
