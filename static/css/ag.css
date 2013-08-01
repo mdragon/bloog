@@ -1,0 +1,15 @@
+/* Header links should display like normal header text */ 
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+	text-decoration: inherit;
+	color: inherit;
+}
+
+/* Links in the nav bars should not use the link color */
+.nav .links a {
+	color: inherit;
+}
+
+#searchsubmit {
+	margin: .5em 0;
+	vertical-align: middle;
+}

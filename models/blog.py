@@ -27,7 +27,8 @@ from google.appengine.ext import db
 
 import config
 import models
-from models import search
+#from models import search
+from google.appengine.ext import search
 
 # Handle generation of thread strings
 def get_thread_string(article, cur_thread_string):
@@ -42,7 +43,7 @@ def get_thread_string(article, cur_thread_string):
         return None         # Only allow 999 comments on each tree level
     return cur_thread_string + "%03d" % (num_comments + 1)
 
-class Article(search.SearchableModel):
+class Article(search.SearchableModel, models.SerializableModel):
     unsearchable_properties = ['permalink', 'legacy_id', 'article_type', 
                                'excerpt', 'html', 'format', 'tag_keys']
     json_does_not_include = ['assoc_dict']
@@ -134,7 +135,7 @@ class Article(search.SearchableModel):
         """
         import re
         return re.sub('&(?!amp;)', '&amp;', self.html)
-
+	
 class Comment(models.SerializableModel):
     """Stores comments and their position in comment threads.
 
