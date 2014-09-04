@@ -25,7 +25,8 @@ BLOG = {
     "master_atom_url": "/feeds/atom.xml",
     # By default, visitors can comment on article for this many days.
     # This can be overridden by setting article.allow_comments
-    "days_can_comment": 60,
+    "days_can_comment": 365*2,
+    "cache_time": 3600,
     # You can override this default for each page through a handler's call to 
     #  view.ViewPage(cache_time=...)
 	"js_debug": "true" if DEBUG else "false",

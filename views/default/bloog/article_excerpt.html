@@ -13,7 +13,7 @@
     </div>
     <h2><a href="/{{ article.permalink }}" title="{{ article.title }}">{{ article.title }}</a></h2>
     <div class="entry">
-        <p>{{ article.html }}</p>
+        <p>{% autoescape off %}{{ article.html|safe }}{% endautoescape %}</p>
     </div>
 </div>
 {% endif %}

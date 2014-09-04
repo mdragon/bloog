@@ -2,7 +2,6 @@
 
 {% if article.embedded_code %}
 {% block head %}
-<meta name="description" content="{{article.html|description}}" />
 {% endblock %}
 {% endif %}
 
@@ -31,7 +30,7 @@
         </div>
         <h2><a id="blogtitle" href="/{{ article.permalink }}" title="{{ article.title }}">{{ article.title }}</a></h2>
         <div id="blogbody" class="entry">
-            {{ article.html }}
+            {% autoescape off %}{{  article.html|safe }}{% endautoescape %}
         </div>
     </div>
     <div id="more_reading">

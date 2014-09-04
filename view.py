@@ -225,7 +225,7 @@ class ViewPage(object):
         template_info = get_view_file(handler, params)
         logging.debug("Using template at %s", template_info['file'])
         output = self.render_or_get_cache(handler, template_info, params)
-        handler.response.out.write(output)
+        handler.response.out.write(unicode(output))
 
     def render_query(self, handler, model_name, query, params={},
                      num_limit=config.PAGE['articles_per_page'],
